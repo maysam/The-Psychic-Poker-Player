@@ -1,5 +1,28 @@
 <?php
 
+//	first we cache all the combinatories, so we don't need to calculate them each time
+$data = array(1,2,3,4,5);
+$result = array(array()); // We need to start with one empty element, we add or not add one element from data array each time
+foreach ($data as $arr)
+{
+    // This is the cartesian product:
+    $new_result = array();
+    foreach ($result as $old_element) { 
+    	// add item or not add, to all produced combinations
+   		$new_result [] = array_merge($old_element,(array)$arr);
+   		$new_result [] = array_merge($old_element,(array)'null');
+    }
+    $result = $new_result;
+}
+
+foreach($result as $arr) {
+	//	removing null values
+	$arr = array_diff($arr, array('null'));
+	//	adding each array of items to the list of arrays of same length
+	$combinations[count($arr)][]=$arr;
+}
+
+
 //	Hand: TH JH QC QD QS Deck: QH KH AH 2S 6S Best hand: 
 const straight_flush	=	1;
 //	Hand: 2H 2S 3H 3S 3C Deck: 2D 3D 6C 9C TH Best hand: 
@@ -192,24 +215,15 @@ class Deck {
 class Game {
         
     public $cards;
-    public $hand;
-    public $deck;
     
     function __construct ($input) {
         $parts = explode(' ',$input);
         if(count($parts) != 10)
             return false;
-        $this->hand = new Hand();
-        $this->deck = new Deck();
+        $this->cards = array();	//	reset
         foreach($parts as $part) {
             $card = new Card($part);
-            $this->cards[$card->getHash()] = $card;
-            $i++;
-            if ($i <= 5) {
-                $this->hand->addCard($card);
-            } else {
-                $this->deck->addCard($card);
-            }
+            $this->cards[] = $card;
         }
     }
     
@@ -225,12 +239,23 @@ class Game {
 					one_pair		=>	'one pair',
 					highest_card	=>	'highest card'
 				);
-        $str = 'Hand: ';
-        $str.= $this->hand->toString();
-        $str.= ' Deck: ';
-        $str.= $this->deck->toString();
-        $str.= ' Best hand: ';
-        $str.= $result[$this->hand->bestValue()];
+global $combinations;
+    	for($i=0;$i<=5;$i++) {
+    		//	take i number from hand and take the rest from the deck
+    		//	cards on deck are fixed, so we shuffle from the hand $i! combinations
+    		//	choose (5-i) cards from first 5 cards (0-4) and (i) cards in order from second 5 cards (5-9)
+    		foreach($combinations[$i] as $comb) {
+    			$hand = new Hand();
+    			foreach($comb as $id) {
+    				$hand->addCard($this->cards[$id]);
+    			}
+	    		for($j=5;$j<10-$i;$j++)
+	    			$hand->addCard($this->cards[$j]);
+		        $str .= $i.': Hand: '.$hand->toString().' Deck: --- Best hand: '.$result[$hand->bestValue()]."\r\n";
+    		}    		
+    	}
+
+//        $str = 'Hand: '.$this->hand->toString().' Deck: '.$this->deck->toString().' Best hand: '.$result[$this->hand->bestValue()];
         return $str;
     }
 }
