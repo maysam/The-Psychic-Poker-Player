@@ -220,15 +220,15 @@ class Game {
     
     function bestHand() {
 		$result = array(
-				 	straight_flush	=>	'straight flush',
-					four_of_a_kind	=>	'four of a kind',
-					full_house		=>	'full house',
+				 	straight_flush	=>	'straight-flush',
+					four_of_a_kind	=>	'four-of-a-kind',
+					full_house		=>	'full-house',
 					flush			=>	'flush',
 					straight		=>	'straight',
-					three_of_a_kind	=>	'three of a kind',
-					two_pairs		=>	'two pairs',
-					one_pair		=>	'one pair',
-					highest_card	=>	'highest card'
+					three_of_a_kind	=>	'three-of-a-kind',
+					two_pairs		=>	'two-pairs',
+					one_pair		=>	'one-pair',
+					highest_card	=>	'highest-card'
 				);
 		global $combinations;
 		$bestValue = highest_card;
