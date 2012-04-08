@@ -1,4 +1,4 @@
- <H1><BR CLEAR=ALL><CENTER><TABLE><TR><TD><B><FONT SIZE=5>&nbsp;<A NAME="SECTION0001000000000000000000">The Psychic Poker Player</A></FONT>&nbsp;</B></TABLE></CENTER></H1>
+<H1>The Psychic Poker Player</H1>
 <P>
 In 5-card draw poker, a player is dealt a hand of five cards (which may be 
 looked at).  The player may then discard between zero and five of his or her 
@@ -13,7 +13,7 @@ that the poker player is psychic and knows which cards are on top of the
 deck.  Write a program which advises the player which cards to discard so 
 as to maximize the value of the resulting hand.
 <P>
-<H2><FONT><A NAME="SECTION0001001000000000000000">Input and Output</A></FONT></H2>
+<H2>Input and Output</H2>
 <P>
 Input will consist of a series of lines, each containing the initial
 five cards in the hand then the first five cards on top of the deck.
@@ -35,7 +35,7 @@ be replaced from the top of the deck.  Also note that examples of all types
 of hands appear in the sample output, with the hands shown in decreasing 
 order of value.
 <P>
-<H2><FONT><A NAME="SECTION0001002000000000000000">Sample Input</A></FONT></H2>
+<H2>Sample Input</H2>
 </P>
 <PRE>TH JH QC QD QS QH KH AH 2S 6S
 2H 2S 3H 3S 3C 2D 3D 6C 9C TH
@@ -47,7 +47,7 @@ AH 2C 9S AD 3C QH KS JS JD KD
 6C 9C 8C 2D 7C 2H TC 4C 9S AH
 3D 5S 2H QD TD 6S KH 9H AD QH</PRE>
 <P>
-<H2><FONT><A NAME="SECTION0001003000000000000000">Sample Output</A></FONT></H2>
+<H2>Sample Output</H2>
 </P>
 <PRE>Hand: TH JH QC QD QS Deck: QH KH AH 2S 6S Best hand: straight-flush
 Hand: 2H 2S 3H 3S 3C Deck: 2D 3D 6C 9C TH Best hand: four-of-a-kind
@@ -59,6 +59,9 @@ Hand: AH 2C 9S AD 3C Deck: QH KS JS JD KD Best hand: two-pairs
 Hand: 6C 9C 8C 2D 7C Deck: 2H TC 4C 9S AH Best hand: one-pair
 Hand: 3D 5S 2H QD TD Deck: 6S KH 9H AD QH Best hand: highest-card</PRE>
 <P>
-</BODY>
-</HTML>
+<P>
+<H2>How to Run</H2>
+</P>
+<PRE>php main.php < input.php</PRE>
+<P>
 
