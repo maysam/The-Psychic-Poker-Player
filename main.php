@@ -1,28 +1,5 @@
 <?php
 
-//	first we cache all the combinatories, so we don't need to calculate them each time
-$data = array(1,2,3,4,5);
-$result = array(array()); // We need to start with one empty element, we add or not add one element from data array each time
-foreach ($data as $arr)
-{
-    // This is the cartesian product:
-    $new_result = array();
-    foreach ($result as $old_element) { 
-    	// add item or not add, to all produced combinations
-   		$new_result [] = array_merge($old_element,(array)$arr);
-   		$new_result [] = array_merge($old_element,(array)'null');
-    }
-    $result = $new_result;
-}
-
-foreach($result as $arr) {
-	//	removing null values
-	$arr = array_diff($arr, array('null'));
-	//	adding each array of items to the list of arrays of same length
-	$combinations[count($arr)][]=$arr;
-}
-
-
 //	Hand: TH JH QC QD QS Deck: QH KH AH 2S 6S Best hand: 
 const straight_flush	=	1;
 //	Hand: 2H 2S 3H 3S 3C Deck: 2D 3D 6C 9C TH Best hand: 
@@ -110,7 +87,7 @@ class Hand {
 		unset($this->cards[$card->getHash()]);
 	}
 	
-	public function bestValue() {
+	public function getValue() {
 	//	ksort($cards);
 		foreach ($this->cards as $card) {
 			$suits[$card->suit] ++;
@@ -144,8 +121,13 @@ class Hand {
 				$previous_value = $value;
 			} elseif ($previous_value > 0) {
 				if ($value==$previous_value+1) {
+					//	normal sequence
+					$previous_value = $value;
+				} elseif ($value==10 && $previous_value==1) {
+					//	A T J Q K sequence
 					$previous_value = $value;
 				} else {
+					//	no sequence
 					$previous_value = -10;
 				}
 			}
@@ -215,15 +197,24 @@ class Deck {
 class Game {
         
     public $cards;
+ 	public $hand;
+ 	public $deck;
     
     function __construct ($input) {
         $parts = explode(' ',$input);
         if(count($parts) != 10)
             return false;
-        $this->cards = array();	//	reset
+        $this->hand = new Hand();
+        $this->deck = new Deck();
         foreach($parts as $part) {
             $card = new Card($part);
             $this->cards[] = $card;
+            $i++;
+            if ($i <= 5) {
+                $this->hand->addCard($card);
+            } else {
+                $this->deck->addCard($card);
+            }
         }
     }
     
@@ -239,7 +230,8 @@ class Game {
 					one_pair		=>	'one pair',
 					highest_card	=>	'highest card'
 				);
-global $combinations;
+		global $combinations;
+		$bestValue = highest_card;
     	for($i=0;$i<=5;$i++) {
     		//	take i number from hand and take the rest from the deck
     		//	cards on deck are fixed, so we shuffle from the hand $i! combinations
@@ -251,25 +243,57 @@ global $combinations;
     			}
 	    		for($j=5;$j<10-$i;$j++)
 	    			$hand->addCard($this->cards[$j]);
-		        $str .= $i.': Hand: '.$hand->toString().' Deck: --- Best hand: '.$result[$hand->bestValue()]."\r\n";
+	    		$value = $hand->getValue();
+	    		if ($value < $bestValue)
+	    			$bestValue = $value;
+	    		if ($bestValue == straight_flush)
+	    			break 2;
     		}    		
     	}
 
-//        $str = 'Hand: '.$this->hand->toString().' Deck: '.$this->deck->toString().' Best hand: '.$result[$this->hand->bestValue()];
+        $str = 'Hand: '.$this->hand->toString().' Deck: '.$this->deck->toString().' Best hand: '.$result[$bestValue];
         return $str;
     }
 }
 
-
-while(true) {
-    $current_line = fgets(STDIN,1024);
-    $current_line = trim($current_line);
-    if($current_line) {
-//    	printf("$current_line\r\n");
-        $game = new Game($current_line);
-        printf($game->bestHand()."\r\n\r\n");
-    } else {
-        exit;
-    }
+class Main {
+	public function run() {
+		//	first we cache all the combinatories, so we don't need to calculate them each time
+		global $combinations;
+		$data = array(0,1,2,3,4);
+		$result = array(array()); // We need to start with one empty element, we add or not add one element from data array each time
+		foreach ($data as $arr)
+		{
+		    // This is the cartesian product:
+		    $new_result = array();
+		    foreach ($result as $old_element) { 
+		    	// add item or not add, to all produced combinations
+		   		$new_result [] = array_merge($old_element,(array)$arr);
+		   		$new_result [] = array_merge($old_element,(array)'null');
+		    }
+		    $result = $new_result;
+		}
+		
+		foreach($result as $arr) {
+			//	removing null values
+			$arr = array_diff($arr, array('null'));
+			//	adding each array of items to the list of arrays of same length
+			$combinations[count($arr)][]=$arr;
+		}
+		
+		while(true) {
+		    $current_line = fgets(STDIN,1024);
+		    $current_line = trim($current_line);
+		    if($current_line) {
+		        $game = new Game($current_line);
+		        printf($game->bestHand()."\r\n");
+		        unset($game);
+		    } else {
+		        exit;
+		    }
+		}
+	}
 }
+
+Main::run();
 ?>
