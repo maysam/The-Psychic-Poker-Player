@@ -1,15 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
-<HTML>
-<HEAD>
-<TITLE>The Psychic Poker Player</TITLE>
-<META NAME="description" CONTENT="The Psychic Poker Player">
-<META NAME="keywords" CONTENT="htmlatex">
-<META NAME="resource-type" CONTENT="document">
-<META NAME="distribution" CONTENT="global">
-<LINK REL=STYLESHEET HREF="htmlatex.css">
-</HEAD>
-<BODY LANG="EN">
  <H1><BR CLEAR=ALL><CENTER><TABLE><TR><TD><B><FONT SIZE=5>&nbsp;<A NAME="SECTION0001000000000000000000">The Psychic Poker Player</A></FONT>&nbsp;</B></TABLE></CENTER></H1>
 <P>
 In 5-card draw poker, a player is dealt a hand of five cards (which may be 
@@ -48,7 +36,7 @@ of hands appear in the sample output, with the hands shown in decreasing
 order of value.
 <P>
 <H2><FONT><A NAME="SECTION0001002000000000000000">Sample Input</A></FONT></H2>
-<P>
+</P>
 <PRE>TH JH QC QD QS QH KH AH 2S 6S
 2H 2S 3H 3S 3C 2D 3D 6C 9C TH
 2H 2S 3H 3S 3C 2D 9C 3D 6C TH
@@ -60,7 +48,7 @@ AH 2C 9S AD 3C QH KS JS JD KD
 3D 5S 2H QD TD 6S KH 9H AD QH</PRE>
 <P>
 <H2><FONT><A NAME="SECTION0001003000000000000000">Sample Output</A></FONT></H2>
-<P>
+</P>
 <PRE>Hand: TH JH QC QD QS Deck: QH KH AH 2S 6S Best hand: straight-flush
 Hand: 2H 2S 3H 3S 3C Deck: 2D 3D 6C 9C TH Best hand: four-of-a-kind
 Hand: 2H 2S 3H 3S 3C Deck: 2D 9C 3D 6C TH Best hand: full-house
