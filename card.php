@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class Card {
 	public $value;	//	A	1	2-9	T	10	J	11	Q	12	K	13

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 //	Hand: TH JH QC QD QS Deck: QH KH AH 2S 6S Best hand: 
 const straight_flush	=	1;
